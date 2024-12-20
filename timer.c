@@ -4,7 +4,7 @@
 unsigned long TimerCountt;
 unsigned long Semaphore;
 
-void Timer2_delay(unsigned long period){ 
+void Timer2_delay(unsigned long period){
   SYSCTL_RCGCTIMER_R |= (1 << 3);   	// 0) activate timer2
   TimerCountt = 0;
   Semaphore = 0;

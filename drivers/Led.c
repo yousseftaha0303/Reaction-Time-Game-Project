@@ -5,42 +5,52 @@ static int ledSeed = 123456789;
 
 void Set_RedLed(void)
 {
-	GPIO_PORTE_DATA_R |= (1 << 3);
+	GPIO_PORTB_DATA_R |= (1 << 3);
 }
 
 void Set_GreenLed(void)
 {
-	GPIO_PORTE_DATA_R |= (1 << 4);
+	GPIO_PORTB_DATA_R |= (1 << 4);
 }
 
 void Set_BlueLed(void)
 {
-	GPIO_PORTE_DATA_R |= (1 << 5);
+	GPIO_PORTB_DATA_R |= (1 << 5);
 }
 
 void Set_AllLeds(void)
 {
-	GPIO_PORTE_DATA_R |= (7 << 3);
+	GPIO_PORTB_DATA_R |= (7 << 3);
+}
+
+void Set_Buzzer(void)
+{
+	GPIO_PORTB_DATA_R |= (1 << 6);
 }
 
 void Clear_RedLed(void)
 {
-	GPIO_PORTE_DATA_R &= ~(1 << 3);
+	GPIO_PORTB_DATA_R &= ~(1 << 3);
 }
 
 void Clear_GreenLed(void)
 {
-	GPIO_PORTE_DATA_R &= ~(1 << 4);
+	GPIO_PORTB_DATA_R &= ~(1 << 4);
 }
 
 void Clear_BlueLed(void)
 {
-	GPIO_PORTE_DATA_R &= ~(1 << 5);
+	GPIO_PORTB_DATA_R &= ~(1 << 5);
 }
 
 void Clear_AllLeds(void)
 {
-	GPIO_PORTE_DATA_R &= (7 << 3);
+	GPIO_PORTB_DATA_R &= (7 << 3);
+}
+
+void Clear_Buzzer(void)
+{
+	GPIO_PORTB_DATA_R &= ~(1 << 6);
 }
 
 void RandomizeLeds(int currentOpenLed){
