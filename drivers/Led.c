@@ -1,0 +1,68 @@
+#include "../headers/Led.h"
+#include "../headers/tm4c123gh6pm.h"
+
+static int ledSeed = 123456789;
+
+void Set_RedLed(void)
+{
+	GPIO_PORTE_DATA_R |= (1 << 3);
+}
+
+void Set_GreenLed(void)
+{
+	GPIO_PORTE_DATA_R |= (1 << 4);
+}
+
+void Set_BlueLed(void)
+{
+	GPIO_PORTE_DATA_R |= (1 << 5);
+}
+
+void Set_AllLeds(void)
+{
+	GPIO_PORTE_DATA_R |= (7 << 3);
+}
+
+void Clear_RedLed(void)
+{
+	GPIO_PORTE_DATA_R &= ~(1 << 3);
+}
+
+void Clear_GreenLed(void)
+{
+	GPIO_PORTE_DATA_R &= ~(1 << 4);
+}
+
+void Clear_BlueLed(void)
+{
+	GPIO_PORTE_DATA_R &= ~(1 << 5);
+}
+
+void Clear_AllLeds(void)
+{
+	GPIO_PORTE_DATA_R &= (7 << 3);
+}
+
+void RandomizeLeds(int currentOpenLed){
+	// generate a random number between 1 and 3
+	ledSeed ^= (ledSeed << 21);
+	ledSeed ^= (ledSeed >> 30);
+	ledSeed ^= (ledSeed << 4);
+	currentOpenLed = (ledSeed % 3) + 1;
+	
+	// open the required LED
+	Clear_AllLeds();
+	switch(currentOpenLed){
+		case 1:
+			Set_RedLed();
+			break;
+		case 2:
+			Set_GreenLed();
+			break;
+		case 3:
+			Set_BlueLed();
+			break;
+		default:
+			Set_AllLeds();	// for debugging purposes
+	}
+}

@@ -23,3 +23,8 @@ void Timer2_delay(unsigned long period){
 void Timer2_stop(){
 	TIMER2_CTL_R &= ~(1 << 0);
 }
+
+void Timer2A_Handler(void)
+{
+	
+}
