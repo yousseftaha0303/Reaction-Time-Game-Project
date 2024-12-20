@@ -32,8 +32,11 @@ void PortB_Init(void)
 //----------------------------------------------------------------------
 // 0 red , 1 green , 2 blue
 
-void GPIOE_Handler(void){
-
+/*
+*	TODO: Write to the Nokia5110 (Pressed [Color])
+*/
+void GPIOB_Handler(void){
+	GPIO_PORTB_ICR_R = (1 << 0) | (1 << 1) | (1 << 2);
 	if(GPIO_PORTB_RIS_R & (1<<0) && GPIO_PORTB_DATA_R & (1<<3)){
 		score++;
 		Clear_RedLed();

@@ -2,6 +2,7 @@
 #include "../headers/tm4c123gh6pm.h"
 
 static int ledSeed = 123456789;
+int currentOpenLed = 0;
 
 void Set_RedLed(void)
 {
@@ -53,7 +54,7 @@ void Clear_Buzzer(void)
 	GPIO_PORTB_DATA_R &= ~(1 << 6);
 }
 
-void RandomizeLeds(int currentOpenLed){
+int RandomizeLeds(){
 	// generate a random number between 1 and 3
 	ledSeed ^= (ledSeed << 21);
 	ledSeed ^= (ledSeed >> 30);
@@ -75,4 +76,5 @@ void RandomizeLeds(int currentOpenLed){
 		default:
 			Set_AllLeds();	// for debugging purposes
 	}
+	return currentOpenLed;
 }

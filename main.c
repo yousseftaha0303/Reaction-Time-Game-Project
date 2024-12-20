@@ -13,6 +13,7 @@
 #include "./headers/TExaS.h"
 #include "./headers/Nokia5110.h"
 #include "./headers/ADC.h"
+#include "./headers/GlobalConfig.h"
 
 void EnableInterrupts(void);  // Enable interrupts
 // do not edit this main
@@ -20,7 +21,7 @@ void EnableInterrupts(void);  // Enable interrupts
 int main(void){ unsigned long n;
   TExaS_Init();             // initialize grader, set system clock to 80 MHz
   UART_Init();              // initialize UART
+	Nokia5110_Init();
   EnableInterrupts();       // needed for TExaS
-  
 }
 
