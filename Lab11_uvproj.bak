@@ -460,6 +460,11 @@
               <FileType>5</FileType>
               <FilePath>.\headers\timer.h</FilePath>
             </File>
+            <File>
+              <FileName>GlobalConfig.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\headers\GlobalConfig.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -489,6 +494,11 @@
               <FileName>timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>GPIO.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\drivers\GPIO.c</FilePath>
             </File>
           </Files>
         </Group>

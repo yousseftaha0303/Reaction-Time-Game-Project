@@ -476,11 +476,6 @@
               <FilePath>.\drivers\Nokia5110.c</FilePath>
             </File>
             <File>
-              <FileName>UART.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\UART.c</FilePath>
-            </File>
-            <File>
               <FileName>ADC.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\ADC.c</FilePath>
@@ -499,6 +494,11 @@
               <FileName>GPIO.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\drivers\GPIO.c</FilePath>
+            </File>
+            <File>
+              <FileName>UART.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\drivers\UART.c</FilePath>
             </File>
           </Files>
         </Group>

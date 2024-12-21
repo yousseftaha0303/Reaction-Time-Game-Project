@@ -26,8 +26,8 @@
 // U0Tx (PA1) connected to serial port on PC
 // Ground connected ground in the USB cable
 
-#include "tm4c123gh6pm.h"
-#include "UART.h"
+#include "../headers/tm4c123gh6pm.h"
+#include "../headers/UART.h"
 
 //------------UART_Init------------
 // Initialize the UART for 115200 baud rate (assuming 80 MHz UART clock),
@@ -40,11 +40,11 @@ void UART_Init(void){
   SYSCTL_RCGC1_R |= SYSCTL_RCGC1_UART0; // activate UART0
   SYSCTL_RCGC2_R |= SYSCTL_RCGC2_GPIOA; // activate port A
   UART0_CTL_R &= ~UART_CTL_UARTEN;      // disable UART
-  UART0_IBRD_R = 43;                    // IBRD = int(80,000,000 / (16 * 115200)) = int(43.402778)
-  UART0_FBRD_R = 26;                    // FBRD = round(0.402778 * 64) = 26
+  UART0_IBRD_R = 520;                    // IBRD = int(80,000,000 / (16 * 9600)) = int(520.83333)
+  UART0_FBRD_R = 53;                    // FBRD = round((0.83333 * 64) + 0.5) = 53
                                         // 8 bit word length (no parity bits, one stop bit, FIFOs)
-  UART0_LCRH_R = (UART_LCRH_WLEN_8|UART_LCRH_FEN);
-  UART0_CTL_R |= UART_CTL_UARTEN;       // enable UART
+  UART0_LCRH_R = (3 << 5);
+  UART0_CTL_R |= UART_CTL_UARTEN | (1 << 8);       // enable UART
   GPIO_PORTA_AFSEL_R |= 0x03;           // enable alt funct on PA1,PA0
   GPIO_PORTA_DEN_R |= 0x03;             // enable digital I/O on PA1,PA0
                                         // configure PA1,PA0 as UART0
@@ -80,11 +80,7 @@ unsigned char UART_InCharNonBlocking(void){
 // Output 8-bit to serial port
 // Input: letter is an 8-bit ASCII character to be transferred
 // Output: none
-void UART_OutChar(unsigned char data){
-// as part of Lab 11, modify this program to use UART0 instead of UART1
-  while((UART0_FR_R&UART_FR_TXFF) != 0);
-  UART0_DR_R = data;
-}
+
 
 //------------UART_InUDec------------
 // InUDec accepts ASCII input in unsigned decimal format
@@ -121,11 +117,19 @@ char character;
 // Output String (NULL termination)
 // Input: pointer to a NULL-terminated string to be transferred
 // Output: none
-void UART_OutString(unsigned char buffer[]){
-// as part of Lab 11 implement this function
 
+void UART_OutChar(unsigned char data){
+// as part of Lab 11, modify this program to use UART0 instead of UART1
+  while((UART0_FR_R&UART_FR_TXFF) != 0);
+  UART0_DR_R = data;
 }
 
+void UART_OutString(char *str) {
+    while (*str) {                   // Loop until null terminator
+        UART_OutChar(*str);          // Send each character
+        str++;                       // Move to the next character
+    }
+}
 unsigned char String[10];
 //-----------------------UART_ConvertUDec-----------------------
 // Converts a 32-bit number in unsigned decimal format
