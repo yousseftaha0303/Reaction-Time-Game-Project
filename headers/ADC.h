@@ -1,8 +1,8 @@
 #ifndef ADC
 #define ADC
 
-void ADC1_Init(void);
-void ADC0_Init(void);
-void ADC_Init(void);
+void ADC1_Initialize(void);
+void ADC0_Initialize(void);
+void ADC_InitBoth(void);
 
 #endif

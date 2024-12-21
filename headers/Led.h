@@ -13,5 +13,6 @@ void Clear_AllLeds(void);
 int RandomizeLeds(void);
 void Set_Buzzer(void);
 void Clear_Buzzer(void);
+int ChkAllLeds(void);
 
 #endif

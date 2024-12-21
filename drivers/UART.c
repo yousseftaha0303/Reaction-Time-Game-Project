@@ -35,16 +35,18 @@
 // Input: none
 // Output: none
 void UART_Init(void){
-// as part of Lab 11, modify this program to use UART0 instead of UART1
-//                 switching from PC5,PC4 to PA1,PA0
-  SYSCTL_RCGC1_R |= SYSCTL_RCGC1_UART0; // activate UART0
+	SYSCTL_RCGC1_R |= SYSCTL_RCGC1_UART0; // activate UART0
   SYSCTL_RCGC2_R |= SYSCTL_RCGC2_GPIOA; // activate port A
   UART0_CTL_R &= ~UART_CTL_UARTEN;      // disable UART
-  UART0_IBRD_R = 520;                    // IBRD = int(80,000,000 / (16 * 9600)) = int(520.83333)
-  UART0_FBRD_R = 53;                    // FBRD = round((0.83333 * 64) + 0.5) = 53
+  //UART0_IBRD_R = 43;                    // IBRD = int(80,000,000 / (16 * 115200)) = int(43.402778)
+	UART0_IBRD_R = 260;                    // IBRD = int(80,000,000 / (16 * 19200)) = int(260.402778)
+  //UART0_FBRD_R = 26;                    // FBRD = round(0.402778 * 64) = 26
+	UART0_FBRD_R = 27;                    // FBRD = round(0.416666 * 64 +0.5) = 27
                                         // 8 bit word length (no parity bits, one stop bit, FIFOs)
-  UART0_LCRH_R = (3 << 5);
-  UART0_CTL_R |= UART_CTL_UARTEN | (1 << 8);       // enable UART
+  UART0_LCRH_R = (UART_LCRH_WLEN_8|UART_LCRH_FEN);	
+  UART0_CTL_R |= UART_CTL_UARTEN;	// enable UART
+	
+	
   GPIO_PORTA_AFSEL_R |= 0x03;           // enable alt funct on PA1,PA0
   GPIO_PORTA_DEN_R |= 0x03;             // enable digital I/O on PA1,PA0
                                         // configure PA1,PA0 as UART0
@@ -120,15 +122,16 @@ char character;
 
 void UART_OutChar(unsigned char data){
 // as part of Lab 11, modify this program to use UART0 instead of UART1
-  while((UART0_FR_R&UART_FR_TXFF) != 0);
+  while((UART0_FR_R& 0x20) != 0);
   UART0_DR_R = data;
 }
 
-void UART_OutString(char *str) {
-    while (*str) {                   // Loop until null terminator
-        UART_OutChar(*str);          // Send each character
-        str++;                       // Move to the next character
-    }
+void UART_OutString(unsigned char buffer[]){
+// as part of Lab 11 implement this function
+	while(*buffer){
+    UART_OutChar(*buffer);
+    buffer++;
+  }
 }
 unsigned char String[10];
 //-----------------------UART_ConvertUDec-----------------------
@@ -181,4 +184,8 @@ void UART_ConvertDistance(unsigned long n){
 void UART_OutDistance(unsigned long n){
   UART_ConvertDistance(n);      // convert using your function
   UART_OutString(String);       // output using your function
+}
+
+char intToChar(int num) {
+    return (char)(num + '0');
 }

@@ -1,7 +1,7 @@
-#include "./headers/ADC.h"
-#include "./headers/tm4c123gh6pm.h"
+#include "../headers/ADC.h"
+#include "../headers/tm4c123gh6pm.h"
 
-void ADC1_Init(void)
+void ADC1_Initialize(void)
 {
   SYSCTL_RCGCADC_R |= (1 << 1);
 	SYSCTL_RCGC2_R |= (1 << 3);
@@ -18,7 +18,7 @@ void ADC1_Init(void)
 	ADC1_ACTSS_R |= (1 << 3);
 }
 
-void ADC0_Init(void) 
+void ADC0_Initialize(void) 
 {
   SYSCTL_RCGCADC_R |= (1 << 0); 
 	SYSCTL_RCGC2_R |= (1 << 3);
@@ -36,8 +36,8 @@ void ADC0_Init(void)
 	ADC0_ACTSS_R |= (1 << 3);
 }
 
-void ADC_Init(void)
+void ADC_InitBoth(void)
 {
-	ADC0_Init();
-	ADC1_Init();
+	ADC0_Initialize();
+	ADC1_Initialize();
 }

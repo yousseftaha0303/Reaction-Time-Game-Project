@@ -3,43 +3,45 @@
 #include "../headers/GlobalConfig.h"
 #include "../headers/Led.h"
 #include "../headers/Nokia5110.h"
+#include "../headers/UART.h"
 
-unsigned long TimerCountt;
+unsigned long TimerCount;
 unsigned long Semaphore;
 short int OpenLed;
 
-void Timer2_delay(unsigned long period){ 
-  SYSCTL_RCGCTIMER_R |= (1 << 3);   	// 0) activate timer2
-  TimerCountt = 0;
-  Semaphore = 0;
-  TIMER2_CTL_R &= ~(1 << 0);    			// 1) disable timer2A during setup
-  TIMER2_CFG_R  = 0;    							// 2) configure for 32-bit mode
-  TIMER2_TAMR_R = (1 << 1);   				// 3) configure for periodic mode, default down-count settings
-  TIMER2_TAILR_R = period - 1;    		// 4) reload value
-	
-	
-	TIMER2_ICR_R = (1 << 0);    				// 6) clear timer2A timeout flag
-	TIMER2_IMR_R = (1 << 0);
-	NVIC_EN0_R = (1 << 23);							// 9) enable IRQ 23 in NVIC
-  TIMER2_CTL_R |= (1 << 0);    				// 10) enable timer2A
+void Timer2_delay(unsigned long period){
+  unsigned long volatile delay;
+  SYSCTL_RCGCTIMER_R |= 0x04;   // 0) activate timer2
+  delay = SYSCTL_RCGCTIMER_R;
+  TimerCount = 0;
+  TIMER2_CTL_R = 0x00000000;   // 1) disable timer2A
+  TIMER2_CFG_R = 0x00000000;   // 2) 32-bit mode
+  TIMER2_TAMR_R = 0x00000002;  // 3) periodic mode
+  TIMER2_TAILR_R = period-1;   // 4) reload value
+  TIMER2_TAPR_R = 0;           // 5) clock resolution
+  TIMER2_ICR_R = 0x00000001;   // 6) clear timeout flag
+  TIMER2_IMR_R = 0x00000001;   // 7) arm timeout
+  NVIC_PRI5_R = (NVIC_PRI5_R&0x00FFFFFF)|0x80000000;// 8) priority 4
+  NVIC_EN0_R = 1<<23;          // 9) enable IRQ 23 in
+  TIMER2_CTL_R = 0x00000001;   // 10) enable timer2A
 }
 
 void Timer2_stop(){
 	TIMER2_CTL_R &= ~(1 << 0);
 }
 
-/*
-* TODO: UART writing to the computer scree
-*/
 void Timer2A_Handler(void)
 {
-	if(TIMER2_RIS_R & (1 << 4)){
-		TIMER2_ICR_R 	|= (1 << 4);				// acknowledge the interrupt
+	if(TIMER2_RIS_R & (1 << 0)){
+		TIMER2_ICR_R 	|= (1 << 0);				// acknowledge the interrupt
 		Clear_Buzzer();
 		Nokia5110_Clear();
 		Nokia5110_ClearBuffer();
 		if(TIMER2_TAILR_R == (HoldDelay * CyclesPerSec)){
-			OpenLed = Randomiz_Leds();
+			Nokia5110_OutString("Attempt(s) Left: ");
+			Nokia5110_OutUDec(10 - attempt);
+			Nokia5110_OutString("\n\r");
+			OpenLed = RandomizeLeds();
 			switch(OpenLed){
 				case 1:
 					Nokia5110_OutString("Red");

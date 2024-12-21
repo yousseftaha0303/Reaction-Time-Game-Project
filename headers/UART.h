@@ -74,7 +74,7 @@ unsigned long UART_InUDec(void);
 // Output String (NULL termination)
 // Input: pointer to a NULL-terminated string to be transferred
 // Output: none
-void UART_OutString(char *str);
+void UART_OutString(unsigned char buffer[]);
 
 
 //-----------------------UART_ConvertUDec-----------------------
@@ -116,3 +116,6 @@ void UART_ConvertDistance(unsigned long n);
 // Output: none
 // Fixed format 1 digit, point, 3 digits, space, units, null termination
 void UART_OutDistance(unsigned long n);
+
+
+char intToChar(int num);
