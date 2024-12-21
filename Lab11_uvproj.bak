@@ -455,6 +455,11 @@
               <FileType>5</FileType>
               <FilePath>.\headers\Led.h</FilePath>
             </File>
+            <File>
+              <FileName>timer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\headers\timer.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
