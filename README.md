@@ -67,14 +67,6 @@ In case of using hardware here is a list of needed components:
 | back light   | (BL,  pin 7) not connected, consists of 4 white LEDs which draw ~80mA total |
 | Ground       | (Gnd, pin 8) ground                                          |
 
-##### Screen Dimensioning
-
-![image-20220517062252717](./assets/image-20220517062252717.png)
-
-In The above illustration we are presenting how are graphics and arts displayed on Nokia 5110 Screen.
-
-As you can notice the screen is 84x48 pixels in dimension and every pixel can be turned on or off according to the programmed output to the screen. So we created a matrix of square-shaped arts, each of (**14px height * 14px width**) to display the XO matrix.
-
 # This Project was under supervision of:
 
 - Dr: Lamiaa El-refaey
