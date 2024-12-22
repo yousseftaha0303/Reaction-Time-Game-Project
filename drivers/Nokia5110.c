@@ -142,6 +142,7 @@ void static lcdwrite(enum typeOfWrite type, char message){
 // inputs: none
 // outputs: none
 // assumes: system clock rate of 80 MHz
+
 void Nokia5110_Init(void){
   volatile unsigned long delay;
   SYSCTL_RCGC1_R |= SYSCTL_RCGC1_SSI0;  // activate SSI0
