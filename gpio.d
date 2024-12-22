@@ -6,3 +6,4 @@
 .\gpio.o: drivers\..\\./headers/Led.h
 .\gpio.o: drivers\..\\./headers/GlobalConfig.h
 .\gpio.o: drivers\../headers/Nokia5110.h
+.\gpio.o: drivers\../headers/UART.h

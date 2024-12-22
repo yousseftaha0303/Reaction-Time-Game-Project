@@ -64,23 +64,15 @@ int RandomizeLeds(){
 	ledSeed ^= (ledSeed << 4);
 	currentOpenLed = (ledSeed % 2) + 1;
 	if(currentOpenLed != 1 && currentOpenLed != 2 &&  currentOpenLed != 3)
-		currentOpenLed = 3;
+		currentOpenLed = 2;
 	// open the required LED
 	Clear_AllLeds();
-	UART_OutChar(intToChar(currentOpenLed));
-	UART_OutString("\n\r");
 	switch(currentOpenLed){
 		case 1:
 			Set_RedLed();
-			GPIO_PORTF_DATA_R = (1 << 1);
 			break;
 		case 2:
 			Set_GreenLed();
-			GPIO_PORTF_DATA_R = (1 << 3);
-			break;
-		case 3:
-			Set_BlueLed();
-			GPIO_PORTF_DATA_R = (1 << 2);
 			break;
 	}
 	return currentOpenLed;

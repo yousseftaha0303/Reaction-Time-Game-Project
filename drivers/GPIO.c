@@ -5,8 +5,10 @@
 #include "..\\./headers/Led.h"
 #include "..\\./headers/GlobalConfig.h"
 #include "../headers/Nokia5110.h"
+#include "../headers/UART.h"
 
 volatile unsigned long delay;
+unsigned long FSW1, FSW2;
 
 void PortB_Init(void)
 {
@@ -20,20 +22,13 @@ void PortB_Init(void)
   GPIO_PORTB_AFSEL_R = 0;      		// 6) no alternate function
   GPIO_PORTB_PUR_R = (1 << 0) | (1 << 1) | (1 << 2);        // enable pullup resistors on PB2-PB0
   GPIO_PORTB_DEN_R = 0x7F;        // 7) enable digital pins PB6-PB0
-  GPIO_PORTB_IS_R &= ~(1 << 0) | ~(1 << 1) | ~(1 << 2);       // 8) PB2-PB0 are edge-sensitive
-  GPIO_PORTB_IBE_R &= ~(1 << 0) | ~(1 << 1) | ~(1 << 2);      // PB2-PB0 are not both edges
-  GPIO_PORTB_IEV_R &= ~(1 << 0) | ~(1 << 1) | ~(1 << 2);      // PB2, PB0 are falling edge event
-  GPIO_PORTB_ICR_R = 0x7;         // (e) Clear flag2-flag0
-  GPIO_PORTB_IM_R |= 0x7;         // (f) Arm interrupt on PB2-PB0
-  NVIC_PRI0_R = (NVIC_PRI0_R & ~0x000000E0) | (2 << 5); // Set priority 2
-  NVIC_EN0_R = (1 << 1);
-  EnableInterrupts();
 }
 
 //----------------------------------------------------------------------
 // 0 red , 1 green , 2 blue
 
-void GPIOB_Handler(void){
+
+/*void GPIOPortB_Handler(void){
 	GPIO_PORTB_ICR_R = (1 << 0) | (1 << 1) | (1 << 2);
 	if(GPIO_PORTB_RIS_R & (1<<0) && GPIO_PORTB_DATA_R & (1<<3)){
 		attempt++;
@@ -67,32 +62,49 @@ void GPIOB_Handler(void){
 		Nokia5110_Clear();
 		Nokia5110_OutString("Wrong Led Pressed!");
 	}
+}*/
+
+
+void PortF_Init(void){  unsigned long volatile delay;
+  SYSCTL_RCGC2_R |= 0x00000020; // (a) activate clock for port F
+  delay = SYSCTL_RCGC2_R;
+  GPIO_PORTF_LOCK_R = 0x4C4F434B; // unlock GPIO Port F
+  GPIO_PORTF_CR_R = 0x11;           // allow changes to PF4-0  0001 0001
+  GPIO_PORTF_DIR_R = 0x0E;          // 5) PF4,PF0 input, PF3,PF2,PF1 output      
+  GPIO_PORTF_AFSEL_R &= ~0x11;  //     disable alt funct 
+  GPIO_PORTF_DEN_R = 0x1F;          // 7) enable digital pins PF4-PF0          
+  GPIO_PORTF_PCTL_R &= ~0x000F000F; //  configure PF4 as GPIO
+  GPIO_PORTF_AMSEL_R &= ~0x11;  //     disable analog functionality 
+  GPIO_PORTF_PUR_R |= 0x11;     //     enable weak pull-up on PF4
+  GPIO_PORTF_IS_R &= ~0x11;     // (d) PF4,PF0 is edge-sensitive
+  GPIO_PORTF_IBE_R &= ~0x11;    //     PF4,PF0 is not both edges
+  GPIO_PORTF_IEV_R &= ~0x11;    //     PF4,PF0 falling edge event
+  GPIO_PORTF_ICR_R = 0x11;      // (e) clear flags 4
+  GPIO_PORTF_IM_R |= 0x11;      // (f) arm interrupt on PF4,PF0
+  NVIC_PRI7_R = (NVIC_PRI7_R&0xFF00FFFF)|0x00400000; // (g) priority 2
+  NVIC_EN0_R = 0x40000000;      // (h) enable interrupt 30 in NVIC
+	EnableInterrupts();
 }
 
-
-void PortF_Init(void){ volatile unsigned long delay;
-	// Choose Port F ( sixth bit : bit-5 )
-	SYSCTL_RCGC2_R |= (1<<5);     		// 1) F clock
-  delay = SYSCTL_RCGC2_R;           // delay   
-  // Put Magic Number into GPIOLOCK to unlock and enable write access to GPIOCR 
-	GPIO_PORTF_LOCK_R = 0x4C4F434B;   // 2) unlock PortF PF0  
-	// Allow access to this pins as they unlocked
-  GPIO_PORTF_CR_R = 0x1F;           // allow changes to PF4-0  
-	// Analog not used
-  GPIO_PORTF_AMSEL_R = 0x00;        // 3) disable analog function
-	// Set all pins as GPIO
-  GPIO_PORTF_PCTL_R = 0x00000000;   // 4) GPIO clear bit PCTL  
-	// Decide which input (0) and output (1)
-	// PF4 and PF0 are input SW1 and SW2 respectively
-	// PF3,PF2,PF1 are outputs to the LED
-  GPIO_PORTF_DIR_R = 0x0E;          // 5) PF4,PF0 input, PF3,PF2,PF1 output 
-	// GPIO workcase  
-  GPIO_PORTF_AFSEL_R = 0x00;        // 6) no alternate function
-	// Enable Pull up
-  GPIO_PORTF_PUR_R = 0x11;          // enable pullup resistors on PF4,PF0   
-	// Enable Digital Pins
-  GPIO_PORTF_DEN_R = 0x1F;          // 7) enable digital pins PF4-PF0
-	GPIO_PORTF_DATA_R &= ~0xE;	
+void GPIOPortF_Handler(void){ // called on touch of either SW1 or SW2
+  if(GPIO_PORTB_DATA_R & (1 << 3) && GPIO_PORTF_RIS_R & (1 << 0)){
+		GPIO_PORTF_ICR_R |= (1 << 0);
+		Clear_AllLeds();
+		score++;
+		Nokia5110_Clear();
+		Nokia5110_ClearBuffer();
+		Nokia5110_OutString("Scored");
+		Set_Buzzer();
+	}
+	if(GPIO_PORTB_DATA_R & (1 << 4) && GPIO_PORTF_RIS_R & (1 << 4)){
+		GPIO_PORTF_ICR_R |= (1 << 4);
+		Clear_AllLeds();
+		score++;
+		Nokia5110_Clear();
+		Nokia5110_ClearBuffer();
+		Nokia5110_OutString("Scored");
+		Set_Buzzer();
+	}
 }
 
 

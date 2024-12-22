@@ -178,12 +178,14 @@ void Nokia5110_Init(void){
   for(delay=0; delay<10; delay=delay+1);// delay minimum 100 ns
   RESET = RESET_HIGH;                   // negative logic
 
-  lcdwrite(COMMAND, 0x21);     // Extended instruction set
-	lcdwrite(COMMAND, 0xB8);     // Contrast for blue screen (use 0xB1 for red)
-	lcdwrite(COMMAND, 0x04);     // Temperature coefficient
-	lcdwrite(COMMAND, 0x14);     // Bias (experiment with 0x13 or 0x14)
-	lcdwrite(COMMAND, 0x20);     // Basic instruction set
-	lcdwrite(COMMAND, 0x0C);     // Normal display mode
+  lcdwrite(COMMAND, 0x21);              // chip active; horizontal addressing mode (V = 0); use extended instruction set (H = 1)
+                                        // set LCD Vop (contrast), which may require some tweaking:
+  lcdwrite(COMMAND, CONTRAST);          // try 0xB1 (for 3.3V red SparkFun), 0xB8 (for 3.3V blue SparkFun), 0xBF if your display is too dark, or 0x80 to 0xFF if experimenting
+  lcdwrite(COMMAND, 0x04);              // set temp coefficient
+  lcdwrite(COMMAND, 0x14);              // LCD bias mode 1:48: try 0x13 or 0x14
+
+  lcdwrite(COMMAND, 0x20);              // we must send 0x20 before modifying the display control mode
+  lcdwrite(COMMAND, 0x0C);              // set display control to normal mode: 0x0D for inverse
 }
 
 //********Nokia5110_OutChar*****************

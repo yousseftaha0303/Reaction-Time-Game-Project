@@ -3,6 +3,7 @@
 #include "../headers/GlobalConfig.h"
 #include "../headers/timer.h"
 #include "../headers/Nokia5110.h"
+#include <stdint.h>
 
 
 // Possible overflow because of continous sampling? Page 828
@@ -10,6 +11,7 @@
 
 volatile unsigned int diff_result;
 volatile unsigned int LDR_result;
+volatile int adcdelay;
 
 
 /*
@@ -76,44 +78,49 @@ void ADC1_Handler(void)
 */
 
 
-void ADC1_initialize(void){
-	SYSCTL_RCGCADC_R |= (1 << 1);
-	SYSCTL_RCGC2_R |= (1 << 3);
-	
-	GPIO_PORTD_DIR_R &= ~(1 << 1);   // Set PD1 as input
-  GPIO_PORTD_AFSEL_R |= (1 << 1);  // Enable alternate function (ADC)
-  GPIO_PORTD_DEN_R &= ~(1 << 1);   // Disable digital function
-  GPIO_PORTD_AMSEL_R |= (1 << 1);  // Enable analog function
-	
-	GPIO_PORTD_DIR_R &= ~(1 << 0);   // Set PD0 as input
-  GPIO_PORTD_AFSEL_R |= (1 << 0);  // Enable alternate function (ADC)
-  GPIO_PORTD_DEN_R &= ~(1 << 0);   // Disable digital function
-  GPIO_PORTD_AMSEL_R |= (1 << 0);  // Enable analog function
-	
-	// Initialization for Potentiometer
-	ADC1_ACTSS_R &= ~(1 << 3);			 // Disable sample sequencer 3
-	ADC1_EMUX_R |= (15 << 12);			 // Countinuously sample 
-	ADC1_SSMUX3_R = 6;							 // ADC input 6 for PD1
-	ADC1_SSCTL3_R |= (1 << 1) | (1 << 2);	// (1 << 2) Enables Interrupt, (1 << 1) marks as end of sequence
-	ADC1_IM_R |= (1 << 3);
-	ADC1_ACTSS_R |= (1 << 3);
-	
-	// Initialization for LDR
-	ADC1_ACTSS_R &= ~(1 << 2);			 // Disable sample sequencer 2
-	ADC1_EMUX_R |= (15 << 8);			   // Countinuously sample
-	ADC1_SSMUX3_R = 7;							 // ADC input 7 for PD0
-	ADC1_SSCTL3_R |= (1 << 1) | (1 << 2);	// (1 << 2) Enables Interrupt, (1 << 1) marks as end of sequence
-	ADC1_IM_R |= (1 << 2);
-	ADC1_ACTSS_R |= (1 << 2);
-	
-	NVIC_EN1_R |= (1 << 19) | (1 << 18);				 //  Enable NVIC for ADC1SS3 (IRQ 51), Enable NVIC for ADC1SS2 (IRQ 50)
-	
-	NVIC_PRI2_R = (NVIC_PRI2_R & ~0xE0000000) | (0 << 29); // Set priority 0 for ADC1 Sequencer 2 (IRQ 50)
-	NVIC_PRI4_R = (NVIC_PRI4_R & ~0x000000E0) | (3 << 5);   // Set priority 3 for ADC1 Sequencer 3 (IRQ 51)
+void ADC_Init(void) {
+    SYSCTL_RCGCADC_R |= (1 << 0);             // Enable ADC0 clock
+    SYSCTL_RCGCGPIO_R |= (1 << 4);            // Enable clock for Port E
 
+    adcdelay = 0;
+    adcdelay += 4;                               // Stabilization delay
+
+    GPIO_PORTE_AFSEL_R |= (1 << 3);           // Enable alternate function on PE3
+    GPIO_PORTE_DEN_R &= ~(1 << 3);            // Disable digital function on PE3
+    GPIO_PORTE_AMSEL_R |= (1 << 3);           // Enable analog functionality on PE3
+
+    ADC0_ACTSS_R &= ~(1 << 3);                // Disable Sample Sequencer 3
+    ADC0_EMUX_R &= ~(0xF << 12);              // Configure as software trigger
+    ADC0_SSMUX3_R = 0;                        // Set input channel to AIN0 (PE3)
+    ADC0_SSCTL3_R = (1 << 1) | (1 << 2);      // Single-ended, end-of-sequence
+    ADC0_ACTSS_R |= (1 << 3);                 // Enable Sample Sequencer 3
 }
 
-void ADC1Seq3_Handler(void)
+// Read ADC value using bitwise operations
+uint16_t ADC_Read(void) {
+    uint16_t result;
+    ADC0_PSSI_R |= (1 << 3);                  // Initiate SS3
+    while ((ADC0_RIS_R & (1 << 3)) == 0);     // Wait for conversion to complete
+    result = ADC0_SSFIFO3_R & 0xFFF;          // Read 12-bit result
+    ADC0_ISC_R |= (1 << 3);                   // Clear interrupt flag
+    return result;
+}
+
+int ADC_GetDiff(void){
+		uint16_t diff_result = ADC_Read();
+		if(diff_result <= 1365){
+			GameDiff = 1;
+		}
+		else if(diff_result > 1365 && diff_result <= 2730){
+			GameDiff = 2;
+		}
+		else{
+			GameDiff = 3;
+		}
+		return GameDiff;
+}
+
+/*void ADC1Seq3_Handler(void)
 	// ADC values range from 0 to 4095 with step size of 3.3v / 4095 = 0.0008v
 	// To divide the range into 3 values (0 - 1365, 1366 - 2730, 2731 - 4095)
 {
@@ -122,6 +129,7 @@ void ADC1Seq3_Handler(void)
 		diff_result = ADC1_SSFIFO3_R;		// variable diff_result stores the sampling result
 		if(diff_result <= 1365){
 			GameDiff = 1;
+			
 		}
 		else if(diff_result > 1365 && diff_result <= 2730){
 			GameDiff = 2;
@@ -151,4 +159,4 @@ void ADC1Seq2_Handler(void)
 			Timer2_delay(HoldDelay * CyclesPerSec);
 		}
 	}
-}
+}*/

@@ -16,36 +16,48 @@
 #include "./headers/GlobalConfig.h"
 #include "./headers/timer.h"
 #include "./headers/GPIO.h"
+#include "./headers/Led.h"
+#include <stdint.h>
 
-unsigned long SW1;
 unsigned char c;
+int result;
 
 void EnableInterrupts(void);  // Enable interrupts
 void WaitForInterrupt(void);
+unsigned long SW1, SW2;
 // do not edit this main
 // your job is to implement the UART_OutUDec UART_OutDistance functions 
-int main(void){ unsigned long n;
-  TExaS_Init();             // initialize grader, set system clock to 80 MHz
-  UART_Init();              // initialize UART
+int main(void){
+  TExaS_Init(); 
+	UART_Init();
 	Nokia5110_Init();
 	Nokia5110_Clear();
 	Nokia5110_ClearBuffer();
-	PortF_Init();
+  // TExaS_Init initializes the real board grader for lab 4
+  PortF_Init();
 	PortB_Init();
-	ADC1_initialize();
+	ADC_Init();
+	start:
+	UART_OutString("Current Difficulty Level = ");
+	UART_OutChar(intToChar(ADC_GetDiff()));
+	UART_OutString("\n\r");
 	Timer2_delay(160000000);
-	Timer2_stop();
-  EnableInterrupts();       // needed for TExaS
-	while(1){
-		if(!GPIO_PORTF_DATA_R & (1 << 4))
-			break;
-	}
-	Timer2_enable();
-	while(attempt < 10){
+  EnableInterrupts();  // The grader uses interrupts
+  while(attempt < 10){
 		WaitForInterrupt();
-	}
+  }
+	Timer2_stop();
+	Clear_AllLeds();
 	Nokia5110_Clear();
 	Nokia5110_ClearBuffer();
 	Nokia5110_OutString("Score: ");
 	Nokia5110_OutUDec(score);
+	UART_OutString("Game Over, You Scored: ");
+	UART_OutChar(intToChar(score));
+	UART_OutString("\n\r");
+	UART_OutString("If you want to play again press SW3!\n\r");
+	while(GPIO_PORTB_DATA_R & (1 << 0));
+	score = 0;
+	attempt = 0;
+	goto start;
 }

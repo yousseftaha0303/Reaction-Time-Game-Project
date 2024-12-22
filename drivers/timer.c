@@ -8,6 +8,7 @@
 unsigned long TimerCount;
 unsigned long Semaphore;
 short int OpenLed;
+short int flag = 0;
 
 void Timer2_delay(unsigned long period){
   unsigned long volatile delay;
@@ -41,10 +42,9 @@ void Timer2A_Handler(void)
 		Clear_Buzzer();
 		Nokia5110_Clear();
 		Nokia5110_ClearBuffer();
-		if(TIMER2_TAILR_R == (HoldDelay * CyclesPerSec)){
-			Nokia5110_OutString("Attempt(s) Left: ");
+		if(flag == 1){
+			Nokia5110_OutString("Attempt(s): ");
 			Nokia5110_OutUDec(10 - attempt);
-			Nokia5110_OutString("\n\r");
 			OpenLed = RandomizeLeds();
 			switch(OpenLed){
 				case 1:
@@ -53,16 +53,18 @@ void Timer2A_Handler(void)
 				case 2:
 					Nokia5110_OutString("Green");
 					break;
-				case 3:
-					Nokia5110_OutString("Blue");
-					break;
 			}
-			Timer2_delay(GameDiffTimes[GameDiff] * CyclesPerSec);
+			Timer2_delay(GameDiffTimes[GameDiff - 1] * CyclesPerSec);
+			flag = 0;
+			attempt++;
 		}
 		else{
 			Clear_AllLeds();
-			Nokia5110_OutString("Be Ready!");
+			Nokia5110_OutString("Difficulty: ");
+			Nokia5110_OutUDec(GameDiff);
 			Timer2_delay(HoldDelay * CyclesPerSec);
+			GPIO_PORTF_ICR_R |= (1 << 0) | (1 << 4);
+			flag = 1;
 		}
 	}
 }

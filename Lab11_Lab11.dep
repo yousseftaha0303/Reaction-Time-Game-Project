@@ -1,48 +1,56 @@
 Dependencies for Project 'Lab11', Target 'Lab11': (DO NOT MODIFY !)
-F (.\startup.s)(0x6766C98B)(--cpu Cortex-M4 --pd "__RTX SETA 1" --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
-F (.\main.c)(0x676701F5)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\main.o --omf_browse .\main.crf --depend .\main.d)
-I (./headers/tm4c123gh6pm.h)(0x6766C98B)
-I (./headers/UART.h)(0x6767018E)
-I (./headers/TExaS.h)(0x6766C98B)
-I (./headers/Nokia5110.h)(0x6766C98B)
-I (./headers/ADC.h)(0x6766CBFA)
-I (./headers/GlobalConfig.h)(0x67670068)
-I (./headers/timer.h)(0x6766F3C3)
-I (./headers/GPIO.h)(0x6766F57C)
-F (.\texas.o)(0x6766C98B)()
-F (.\headers\Nokia5110.h)(0x6766C98B)()
-F (.\headers\TExaS.h)(0x6766C98B)()
-F (.\headers\tm4c123gh6pm.h)(0x6766C98B)()
-F (.\headers\UART.h)(0x6767018E)()
-F (.\headers\Led.h)(0x6766F464)()
-F (.\headers\timer.h)(0x6766F3C3)()
-F (.\headers\GlobalConfig.h)(0x67670068)()
-F (.\drivers\Nokia5110.c)(0x6766C98B)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\nokia5110.o --omf_browse .\nokia5110.crf --depend .\nokia5110.d)
-I (drivers\../headers/Nokia5110.h)(0x6766C98B)
-F (.\drivers\Led.c)(0x676703C8)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\led.o --omf_browse .\led.crf --depend .\led.d)
-I (drivers\../headers/Led.h)(0x6766F464)
-I (drivers\../headers/tm4c123gh6pm.h)(0x6766C98B)
-I (drivers\../headers/UART.h)(0x6767018E)
-F (.\drivers\GPIO.c)(0x6766FB16)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\gpio.o --omf_browse .\gpio.crf --depend .\gpio.d)
-I (drivers\..\\./headers/GPIO.h)(0x6766F57C)
-I (drivers\..\\./headers/tm4c123gh6pm.h)(0x6766C98B)
-I (drivers\..\\./headers/TExaS.h)(0x6766C98B)
-I (drivers\..\\./headers/timer.h)(0x6766F3C3)
-I (drivers\..\\./headers/Led.h)(0x6766F464)
-I (drivers\..\\./headers/GlobalConfig.h)(0x67670068)
-I (drivers\../headers/Nokia5110.h)(0x6766C98B)
-F (.\drivers\UART.c)(0x6766FF7E)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\uart.o --omf_browse .\uart.crf --depend .\uart.d)
-I (drivers\../headers/tm4c123gh6pm.h)(0x6766C98B)
-I (drivers\../headers/UART.h)(0x6767018E)
-F (.\drivers\ADC.c)(0x6766CC0B)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\adc.o --omf_browse .\adc.crf --depend .\adc.d)
-I (drivers\../headers/ADC.h)(0x6766CBFA)
-I (drivers\../headers/tm4c123gh6pm.h)(0x6766C98B)
-F (.\drivers\timer.c)(0x67670448)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\timer.o --omf_browse .\timer.crf --depend .\timer.d)
-I (drivers\../headers/timer.h)(0x6766F3C3)
-I (drivers\../headers/tm4c123gh6pm.h)(0x6766C98B)
-I (drivers\../headers/GlobalConfig.h)(0x67670068)
-I (drivers\../headers/Led.h)(0x6766F464)
-I (drivers\../headers/Nokia5110.h)(0x6766C98B)
-I (drivers\../headers/UART.h)(0x6767018E)
-F (.\drivers\GlobalConfig.c)(0x6766F424)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\globalconfig.o --omf_browse .\globalconfig.crf --depend .\globalconfig.d)
-I (drivers\../headers/GlobalConfig.h)(0x67670068)
+F (.\startup.s)(0x67684C85)(--cpu Cortex-M4 --pd "__RTX SETA 1" --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\main.c)(0x676893B8)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+I (./headers/tm4c123gh6pm.h)(0x67684C85)
+I (./headers/UART.h)(0x67684C85)
+I (./headers/TExaS.h)(0x67684C85)
+I (./headers/Nokia5110.h)(0x67684C85)
+I (./headers/ADC.h)(0x67688D74)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7FD94)
+I (./headers/GlobalConfig.h)(0x67684C85)
+I (./headers/timer.h)(0x67684C85)
+I (./headers/GPIO.h)(0x67684C85)
+I (./headers/Led.h)(0x67684FD8)
+F (.\texas.o)(0x67684C85)()
+F (.\headers\Nokia5110.h)(0x67684C85)()
+F (.\headers\TExaS.h)(0x67684C85)()
+F (.\headers\tm4c123gh6pm.h)(0x67684C85)()
+F (.\headers\UART.h)(0x67684C85)()
+F (.\headers\Led.h)(0x67684FD8)()
+F (.\headers\timer.h)(0x67684C85)()
+F (.\headers\GlobalConfig.h)(0x67684C85)()
+F (.\headers\ADC.h)(0x67688D74)()
+F (.\drivers\Nokia5110.c)(0x67684CDD)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\nokia5110.o --omf_browse .\nokia5110.crf --depend .\nokia5110.d)
+I (drivers\../headers/Nokia5110.h)(0x67684C85)
+F (.\drivers\Led.c)(0x676884A5)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\led.o --omf_browse .\led.crf --depend .\led.d)
+I (drivers\../headers/Led.h)(0x67684FD8)
+I (drivers\../headers/tm4c123gh6pm.h)(0x67684C85)
+I (drivers\../headers/UART.h)(0x67684C85)
+F (.\drivers\GPIO.c)(0x6768913C)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\gpio.o --omf_browse .\gpio.crf --depend .\gpio.d)
+I (drivers\..\\./headers/GPIO.h)(0x67684C85)
+I (drivers\..\\./headers/tm4c123gh6pm.h)(0x67684C85)
+I (drivers\..\\./headers/TExaS.h)(0x67684C85)
+I (drivers\..\\./headers/timer.h)(0x67684C85)
+I (drivers\..\\./headers/Led.h)(0x67684FD8)
+I (drivers\..\\./headers/GlobalConfig.h)(0x67684C85)
+I (drivers\../headers/Nokia5110.h)(0x67684C85)
+I (drivers\../headers/UART.h)(0x67684C85)
+F (.\drivers\UART.c)(0x67684C85)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\uart.o --omf_browse .\uart.crf --depend .\uart.d)
+I (drivers\../headers/tm4c123gh6pm.h)(0x67684C85)
+I (drivers\../headers/UART.h)(0x67684C85)
+F (.\drivers\ADC.c)(0x67688CAF)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\adc.o --omf_browse .\adc.crf --depend .\adc.d)
+I (drivers\../headers/ADC.h)(0x67688D74)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C7FD94)
+I (drivers\../headers/tm4c123gh6pm.h)(0x67684C85)
+I (drivers\../headers/GlobalConfig.h)(0x67684C85)
+I (drivers\../headers/timer.h)(0x67684C85)
+I (drivers\../headers/Nokia5110.h)(0x67684C85)
+F (.\drivers\timer.c)(0x67688F62)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\timer.o --omf_browse .\timer.crf --depend .\timer.d)
+I (drivers\../headers/timer.h)(0x67684C85)
+I (drivers\../headers/tm4c123gh6pm.h)(0x67684C85)
+I (drivers\../headers/GlobalConfig.h)(0x67684C85)
+I (drivers\../headers/Led.h)(0x67684FD8)
+I (drivers\../headers/Nokia5110.h)(0x67684C85)
+I (drivers\../headers/UART.h)(0x67684C85)
+F (.\drivers\GlobalConfig.c)(0x67684C85)(-c --cpu Cortex-M4 -D__RTX -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\globalconfig.o --omf_browse .\globalconfig.crf --depend .\globalconfig.d)
+I (drivers\../headers/GlobalConfig.h)(0x67684C85)
