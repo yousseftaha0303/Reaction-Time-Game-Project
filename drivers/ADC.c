@@ -106,6 +106,9 @@ void ADC1_initialize(void){
 	
 	NVIC_EN1_R |= (1 << 19) | (1 << 18);				 //  Enable NVIC for ADC1SS3 (IRQ 51), Enable NVIC for ADC1SS2 (IRQ 50)
 	
+	NVIC_PRI2_R = (NVIC_PRI2_R & ~0xE0000000) | (0 << 29); // Set priority 0 for ADC1 Sequencer 2 (IRQ 50)
+	NVIC_PRI4_R = (NVIC_PRI4_R & ~0x000000E0) | (3 << 5);   // Set priority 3 for ADC1 Sequencer 3 (IRQ 51)
+
 }
 
 void ADC1Sequence3_Handler(void)

@@ -25,7 +25,7 @@ void PortB_Init(void)
   GPIO_PORTB_IEV_R &= ~(1 << 0) | ~(1 << 1) | ~(1 << 2);      // PB2, PB0 are falling edge event
   GPIO_PORTB_ICR_R = 0x7;         // (e) Clear flag2-flag0
   GPIO_PORTB_IM_R |= 0x7;         // (f) Arm interrupt on PB2-PB0
-  NVIC_PRI7_R = (NVIC_PRI7_R & 0xff00ffff) | 0x00A00000;
+  NVIC_PRI0_R = (NVIC_PRI0_R & ~0x000000E0) | (2 << 5); // Set priority 2
   NVIC_EN0_R = (1 << 1);
   EnableInterrupts();
 }

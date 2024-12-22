@@ -21,7 +21,7 @@ void Timer2_delay(unsigned long period){
   TIMER2_TAPR_R = 0;           // 5) clock resolution
   TIMER2_ICR_R = 0x00000001;   // 6) clear timeout flag
   TIMER2_IMR_R = 0x00000001;   // 7) arm timeout
-  NVIC_PRI5_R = (NVIC_PRI5_R&0x00FFFFFF)|0x80000000;// 8) priority 4
+  NVIC_PRI5_R = (NVIC_PRI5_R & ~0x00E00000) | (1 << 21); // Set priority 1 for Timer2A
   NVIC_EN0_R = 1<<23;          // 9) enable IRQ 23 in
   TIMER2_CTL_R = 0x00000001;   // 10) enable timer2A
 }

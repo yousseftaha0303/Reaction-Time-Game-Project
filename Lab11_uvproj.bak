@@ -465,6 +465,11 @@
               <FileType>5</FileType>
               <FilePath>.\headers\GlobalConfig.h</FilePath>
             </File>
+            <File>
+              <FileName>ADC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\headers\ADC.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -499,6 +504,11 @@
               <FileName>timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\drivers\timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>GlobalConfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\drivers\GlobalConfig.c</FilePath>
             </File>
           </Files>
         </Group>
