@@ -9,7 +9,7 @@ short int score = 0;
 short int attempt = 0;
 
 short int LDR_Threshold = 1000;
-volatile unsigned int isLight = 0;
+volatile unsigned int isDark = 0;
 
 /* At vcc = 3.3v, Resistor = 10 Kohm, 
 	 By voltage divider, vout = 3.3 * (2/(2 + 10)) = 0.55v (where 2 is the LDR resistance at bright light)

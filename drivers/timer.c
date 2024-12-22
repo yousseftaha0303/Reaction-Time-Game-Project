@@ -30,6 +30,10 @@ void Timer2_stop(){
 	TIMER2_CTL_R &= ~(1 << 0);
 }
 
+void Timer2_enable(void){
+	TIMER2_CTL_R |= (1 << 0);
+}
+
 void Timer2A_Handler(void)
 {
 	if(TIMER2_RIS_R & (1 << 0)){

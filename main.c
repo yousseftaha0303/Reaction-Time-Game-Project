@@ -32,8 +32,15 @@ int main(void){ unsigned long n;
 	Nokia5110_ClearBuffer();
 	PortF_Init();
 	PortB_Init();
+	ADC1_initialize();
 	Timer2_delay(160000000);
+	Timer2_stop();
   EnableInterrupts();       // needed for TExaS
+	while(1){
+		if(!GPIO_PORTF_DATA_R & (1 << 4))
+			break;
+	}
+	Timer2_enable();
 	while(attempt < 10){
 		WaitForInterrupt();
 	}

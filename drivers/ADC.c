@@ -1,6 +1,8 @@
 #include "../headers/ADC.h"
 #include "../headers/tm4c123gh6pm.h"
 #include "../headers/GlobalConfig.h"
+#include "../headers/timer.h"
+#include "../headers/Nokia5110.h"
 
 
 // Possible overflow because of continous sampling? Page 828
@@ -111,7 +113,7 @@ void ADC1_initialize(void){
 
 }
 
-void ADC1Sequence3_Handler(void)
+void ADC1Seq3_Handler(void)
 	// ADC values range from 0 to 4095 with step size of 3.3v / 4095 = 0.0008v
 	// To divide the range into 3 values (0 - 1365, 1366 - 2730, 2731 - 4095)
 {
@@ -130,16 +132,23 @@ void ADC1Sequence3_Handler(void)
 	}
 }
 
-void ADC1Sequence2_Handler(void)
+void ADC1Seq2_Handler(void)
 {
 	if(ADC1_RIS_R & (1 << 2)){
 		ADC1_ISC_R |= (1 << 2);
 		LDR_result = ADC1_SSFIFO2_R;
-		if(LDR_result >= LDR_Threshold){
-			isLight = 1;
+		if(LDR_result < LDR_Threshold){
+			isDark = 1;
+			Timer2_stop();
+			Nokia5110_Clear();
+			Nokia5110_ClearBuffer();
+			Nokia5110_OutString("Stand in the light");
+			attempt = 0;
+			score = 0;
 		}
-		else{
-			isLight = 0;
+		else if(isDark == 1){
+			isDark = 0;
+			Timer2_delay(HoldDelay * CyclesPerSec);
 		}
 	}
 }
