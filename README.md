@@ -7,6 +7,16 @@ The TM4C123G is a member of the class of high performance 32 bit ARM cortex M4 m
 ![Tiva C tutorials | Embedded Lab](./assets/2.png)
 <img src="./assets/9.png" alt="EK-TM4C123GXL_2" />
 
+Without GPIOs we won’t have any other way to use a microcontroller and it will be nothing more different than a chunk of well-fabricated silicon. Through them we can interface both transducers or sensors and actuators. We can also connect other devices like a display, external devices and so on.The GPIOs of TM4C123 Tiva C ARM microcontrollers are very elaborate, having many options that are usually unavailable in common 8-bit microcontrollers and below we are providing a diagram for more ease in understanding it.
+
+![img](./assets/TM4C123GH6PM.png) 
+<img src="./assets/1.png" style="zoom: 70%;"/>
+
+## Software Specifications
+
+The project code consists of drivers files for GPIO, LCD, UART, Timers, Interrupts, and handlers for the game functionality.
+
+
 Supervised by: 
 Dr: Lamiaa El-refaey
 Eng: Mahmoud Nawar
