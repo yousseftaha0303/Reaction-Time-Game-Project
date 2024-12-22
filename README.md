@@ -4,6 +4,9 @@ This project aims to design a game using the TM4C123GH6PM microcontroller where 
 
 The TM4C123G is a member of the class of high performance 32 bit ARM cortex M4 microcontroller with a broad set of peripherals developed by Texas Instrumentals. The TIVA launchpad has a built-in processor clock frequency of up to 80MHz with a floating-point unit (FPU). The Cortex-M4F processor also supports the tail chaining functionality. It also includes a nested vector interrupt controller (NVIC). The debugging interface used is JTAG and SWD (serial wire debugger) for programming and debugging purposes.
 
+![Tiva C tutorials | Embedded Lab](./assets/2.png)
+<img src="./assets/9.png" alt="EK-TM4C123GXL_2" />
+
 Supervised by: 
 Dr: Lamiaa El-refaey
 Eng: Mahmoud Nawar
