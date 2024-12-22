@@ -16,7 +16,7 @@ void PortB_Init(void)
   GPIO_PORTB_CR_R = 0x7F;         // allow changes to PB6-0
   GPIO_PORTB_AMSEL_R = 0;      		// 3) disable analog function
   GPIO_PORTB_PCTL_R = 0; 					// 4) GPIO clear bit PCTL
-  GPIO_PORTB_DIR_R = 0x07;        // 5) PB2,PB1,PB0 input, PB3,PB4,PB5,PB6 output
+  GPIO_PORTB_DIR_R = 0x78;        // 5) PB2,PB1,PB0 input, PB3,PB4,PB5,PB6 output
   GPIO_PORTB_AFSEL_R = 0;      		// 6) no alternate function
   GPIO_PORTB_PUR_R = (1 << 0) | (1 << 1) | (1 << 2);        // enable pullup resistors on PB2-PB0
   GPIO_PORTB_DEN_R = 0x7F;        // 7) enable digital pins PB6-PB0

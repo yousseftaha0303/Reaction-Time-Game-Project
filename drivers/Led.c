@@ -7,22 +7,22 @@ int currentOpenLed = 0;
 
 void Set_RedLed(void)
 {
-	GPIO_PORTB_DATA_R |= (1 << 3);
+	GPIO_PORTB_DATA_R = (1 << 3);
 }
 
 void Set_GreenLed(void)
 {
-	GPIO_PORTB_DATA_R |= (1 << 4);
+	GPIO_PORTB_DATA_R = (1 << 4);
 }
 
 void Set_BlueLed(void)
 {
-	GPIO_PORTB_DATA_R |= (1 << 5);
+	GPIO_PORTB_DATA_R = (1 << 5);
 }
 
 void Set_AllLeds(void)
 {
-	GPIO_PORTB_DATA_R |= (7 << 3);
+	GPIO_PORTB_DATA_R = (7 << 3);
 }
 
 void Set_Buzzer(void)
