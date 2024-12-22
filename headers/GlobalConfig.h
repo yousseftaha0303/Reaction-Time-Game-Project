@@ -8,4 +8,7 @@ extern const double HoldDelay;
 extern short int GameDiff;
 extern short int score;
 
+extern short int LDR_Threshold;
+extern volatile unsigned int isLight;
+
 #endif

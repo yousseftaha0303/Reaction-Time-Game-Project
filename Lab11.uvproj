@@ -465,6 +465,11 @@
               <FileType>5</FileType>
               <FilePath>.\headers\GlobalConfig.h</FilePath>
             </File>
+            <File>
+              <FileName>ADC.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\headers\ADC.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -476,19 +481,9 @@
               <FilePath>.\drivers\Nokia5110.c</FilePath>
             </File>
             <File>
-              <FileName>ADC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\ADC.c</FilePath>
-            </File>
-            <File>
               <FileName>Led.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\drivers\Led.c</FilePath>
-            </File>
-            <File>
-              <FileName>timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\timer.c</FilePath>
             </File>
             <File>
               <FileName>GPIO.c</FileName>
@@ -499,6 +494,21 @@
               <FileName>UART.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\drivers\UART.c</FilePath>
+            </File>
+            <File>
+              <FileName>ADC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\drivers\ADC.c</FilePath>
+            </File>
+            <File>
+              <FileName>timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\drivers\timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>GlobalConfig.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\drivers\GlobalConfig.c</FilePath>
             </File>
           </Files>
         </Group>
