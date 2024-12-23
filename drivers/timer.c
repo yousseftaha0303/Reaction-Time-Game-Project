@@ -55,8 +55,8 @@ void Timer2A_Handler(void)
 					break;
 			}
 			Timer2_delay(GameDiffTimes[GameDiff - 1] * CyclesPerSec);
+			GPIO_PORTF_ICR_R |= (1 << 0) | (1 << 4);
 			flag = 0;
-			attempt++;
 		}
 		else{
 			Clear_AllLeds();
@@ -65,6 +65,7 @@ void Timer2A_Handler(void)
 			Timer2_delay(HoldDelay * CyclesPerSec);
 			GPIO_PORTF_ICR_R |= (1 << 0) | (1 << 4);
 			flag = 1;
+			attempt++;
 		}
 	}
 }
